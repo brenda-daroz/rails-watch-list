@@ -1,4 +1,17 @@
 <h1><%= @list.name %></h1>
 
-<%= link_to "Add a movie", new_list_bookmark_path(@list.id) %>
+ <% @list.movies.each do |movie| %>
+<% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
+<div>
+<p><%= movie.title %></p>
+<p><%= movie.overview  %></p>
+<%= image_tag "https://image.tmdb.org/t/p/w500/#{movie.poster_url}", alt: "", width: 200 %>
+<p><%= link_to "Delete bookmark", bookmark_path(bookmark), data: { turbo_method: :delete } %></p>
+</div>
+<div>
+<p>Comments</p>
+<p><%= bookmark.comment %></p>
+</div>
+<% end %>
 
+<%= link_to "Add a movie", new_list_bookmark_path(@list.id) %>

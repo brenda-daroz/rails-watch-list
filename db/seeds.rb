@@ -22,6 +22,7 @@ response_serialized = URI.open(url).read
 response = JSON.parse(response_serialized)
 
 results = response["results"]
+puts results
 results.map do |result|
   movie = Movie.new(
     title: result["original_title"],
@@ -30,4 +31,5 @@ results.map do |result|
   )
   movie.save!
   puts movie.title
+  puts movie.poster_url
 end
